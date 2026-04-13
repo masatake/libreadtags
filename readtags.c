@@ -421,7 +421,15 @@ static tagResult growFields (tagFile *const file)
 {
 	tagResult result = TagFailure;
 	unsigned short newCount = (unsigned short) 2 * file->fields.max;
-	tagExtensionField *newFields = (tagExtensionField*)
+	tagExtensionField *newFields;
+
+	if (!(newCount > file->fields.max)) {
+		errno = EOVERFLOW;
+		perror ("too many extension fields");
+		goto out;				/* integer overflow */
+	}
+
+	newFields = (tagExtensionField*)
 			realloc (file->fields.list, newCount * sizeof (tagExtensionField));
 	if (newFields == NULL)
 		perror ("too many extension fields");
@@ -431,6 +439,8 @@ static tagResult growFields (tagFile *const file)
 		file->fields.max = newCount;
 		result = TagSuccess;
 	}
+
+ out:
 	return result;
 }
 
@@ -513,7 +523,7 @@ static tagResult parseExtensionFields (tagFile *const file, tagEntry *const entr
 					{
 						if (growFields (file) != TagSuccess)
 						{
-							*err = ENOMEM;
+							*err = errno;
 							return TagFailure;
 						}
 					}

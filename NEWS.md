@@ -17,6 +17,11 @@
 		4.67user 0.19system 0:04.89elapsed 99%CPU (0avgtext+0avgdata 2819612maxresident)k
 		0inputs+0outputs (0major+44137minor)pagefaults 0swaps
 		```
+- fix an integer overflow occurring when a tag has too many fields.
+
+  The original issue was reported by Arthur Chan
+  <arthur.chan@adalogics.com> from Ada Logics in collaboration with
+  Claude and Anthropic Research.
 
 # Version 0.4.0
 
