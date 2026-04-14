@@ -1,4 +1,4 @@
-# Version XXX
+# Version 0.5.0
 
 - improve performance; put inline keyword on hot spot functions.
 
